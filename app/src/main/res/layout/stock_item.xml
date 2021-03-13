@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="68dp"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/company_pic"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:text="CompanyPic"/>
+
+    <TextView
+        android:id="@+id/company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/company_pic"
+        tool:text="CompanyName"/>
+
+    <TextView
+        android:id="@+id/company_ticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/company_pic"
+        android:layout_alignParentBottom="true"
+        tool:text="CompanyTicker"/>
+
+    <TextView
+        android:id="@+id/company_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        tool:text="CompanyQuotePrice"/>
+
+    <TextView
+        android:id="@+id/company_price_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tool:text="CompanyQuoteChange"/>
+
+    <TextView
+        android:id="@+id/company_price_change_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/company_price_change"
+        tool:text="CompanyQuoteChangePercent"/>
+
+</RelativeLayout>
