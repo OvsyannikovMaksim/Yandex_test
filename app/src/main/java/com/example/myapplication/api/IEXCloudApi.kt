@@ -5,13 +5,12 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface FinHubApi {
+interface IEXCloudApi {
 
-    @GET("/stock/profile2")
+    @GET("stock/{symbol}/quote")
     fun getCompanyInfo(@Query("symbol") smbl: String,
                        @Query("token") api_token: String): Call<CompanyInfoSrc>
 
-    @GET("/quote")
-    fun getCompanyQuoteInfo(@Query("symbol") smbl: String,
-                            @Query("token") api_token: String): Call<CompanyInfoSrc>
+    @GET("stock/market/list/mostactive")
+    fun getPopularCompany(@Query("token") api_token: String): Call<List<CompanyInfoSrc>>
 }
