@@ -7,17 +7,21 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/container"
         app:layout_scrollFlags="scroll|enterAlways">
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:id="@+id/outlinedTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/ic_baseline_search_24"
@@ -26,15 +30,20 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Find company or ticker" />
+                android:text="Find company or ticker"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@color/black">
+            app:tabMode="scrollable"
+            app:tabInlineLabel="true"
+            app:tabTextColor="@color/black"
+            app:tabTextAppearance="@style/MyCustomTabTextAppearance">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -51,5 +60,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
