@@ -1,9 +1,9 @@
 package com.example.myapplication
 
-import retrofit2.Call
+import io.reactivex.Flowable
 
 interface CompanyRepo {
 
-    fun getCompanyInfo(symbol:String): Call<CompanyInfoSrc>
-    fun getPopularCompany():Call<List<CompanyInfoSrc>>
+    fun getCompanyInfo(symbol:String): Flowable<CompanyInfoSrc>
+    fun getPopularCompany(): Flowable<List<CompanyInfoSrc>>
 }

@@ -18,6 +18,7 @@ val diffCallback = object : DiffUtil.ItemCallback<CompanyInfoDst>() {
     }
 }
 
+
 class CompanyAdapter : ListAdapter<CompanyInfoDst, CompanyVH>(diffCallback){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompanyVH {
         TODO("Not yet implemented")
@@ -26,7 +27,6 @@ class CompanyAdapter : ListAdapter<CompanyInfoDst, CompanyVH>(diffCallback){
     override fun onBindViewHolder(holder: CompanyVH, position: Int) {
         TODO("Not yet implemented")
     }
-
 
 }
 
