@@ -6,7 +6,7 @@ import retrofit2.Call
 
 class CompanyRepoImpl(private val api: IEXCloudApi) : CompanyRepo {
 
-    private val API_KEY = ""
+    private val API_KEY = "pk_e429838e00054002ace614e8e4d032d1"
 
     override fun getCompanyInfo(symbol: String): Flowable<CompanyInfoSrc> {
         return api.getCompanyInfo(symbol, API_KEY)
