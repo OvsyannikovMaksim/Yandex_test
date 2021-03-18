@@ -1,6 +1,4 @@
-package com.example.myapplication.network
-
-import com.example.myapplication.api.IEXCloudApi
+package com.example.myapplication.api
 
 object Retrofit{
 

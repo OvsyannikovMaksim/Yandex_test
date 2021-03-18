@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myapplication.R
+import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.StockItemBinding
 
 //private var mListener: IListener,
@@ -41,7 +43,8 @@ class CompanyAdapter :
             else ContextCompat.getColor(itemView.context, R.color.green)
 
             itemBinding.root.setCardBackgroundColor(backgroundColor)
-            Glide.with(itemView.context).load(Uri.parse(companyInfo.logo)).into(itemBinding.companyPic)
+            Glide.with(itemView.context).load(Uri.parse(companyInfo.logo)).error(R.drawable.ic_img_7400)
+                    .into(itemBinding.companyPic)
             itemBinding.companyName.text=companyInfo.name
             itemBinding.companyPrice.text="$"+companyInfo.curPrice.toString()
             itemBinding.companyTicker.text=companyInfo.ticker

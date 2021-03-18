@@ -1,4 +1,7 @@
-package com.example.myapplication
+package com.example.myapplication.util
+
+import com.example.myapplication.common.CompanyInfoDst
+import com.example.myapplication.common.CompanyInfoSrc
 
 class CompanyMapper : Mapper<CompanyInfoSrc, CompanyInfoDst> {
 
