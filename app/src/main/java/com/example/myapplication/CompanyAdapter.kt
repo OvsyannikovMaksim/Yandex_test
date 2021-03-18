@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.StockItemBinding
 
 //private var mListener: IListener,
-class CompanyAdapter(var mData: List<CompanyInfoDst>) :
+class CompanyAdapter :
         ListAdapter<CompanyInfoDst, CompanyAdapter.CompanyVH>(DiffCallback){
 
     private lateinit var binding: StockItemBinding
@@ -26,7 +25,7 @@ class CompanyAdapter(var mData: List<CompanyInfoDst>) :
     }
 
     override fun onBindViewHolder(holder: CompanyVH, position: Int) {
-        holder.bind(mData[position])
+        holder.bind(currentList[position], position)
     }
 
 
@@ -35,25 +34,26 @@ class CompanyAdapter(var mData: List<CompanyInfoDst>) :
     class CompanyVH (private var itemBinding: StockItemBinding):
         RecyclerView.ViewHolder(itemBinding.root){
 
-        fun bind(companyInfo: CompanyInfoDst){
+        fun bind(companyInfo: CompanyInfoDst, position: Int){
+            val backgroundColor = if(position%2==1) ContextCompat.getColor(itemView.context, R.color.white)
+            else ContextCompat.getColor(itemView.context, R.color.light_blue)
+            val colorOfChange = if (companyInfo.priceChange<0.0) ContextCompat.getColor(itemView.context, R.color.red)
+            else ContextCompat.getColor(itemView.context, R.color.green)
+
+            itemBinding.root.setCardBackgroundColor(backgroundColor)
             Glide.with(itemView.context).load(Uri.parse(companyInfo.logo)).into(itemBinding.companyPic)
             itemBinding.companyName.text=companyInfo.name
-            itemBinding.companyPrice.text=companyInfo.curPrice.toString()
+            itemBinding.companyPrice.text="$"+companyInfo.curPrice.toString()
             itemBinding.companyTicker.text=companyInfo.ticker
-            itemBinding.companyPriceChange.text=companyInfo.priceChange.toString()
-            itemBinding.companyPriceChangePercent.text=companyInfo.priceChangePercent.toString()
-            if(companyInfo.priceChange>0.0){
+            itemBinding.companyPriceChange.text=createChangeString(companyInfo.priceChange,companyInfo.priceChangePercent)
+            itemBinding.companyPriceChange.setTextColor(colorOfChange)
 
-                itemBinding.companyPriceChange.setTextColor(ContextCompat.getColor(itemView.context, R.color.green))
-                itemBinding.companyPriceChangePercent.setTextColor(ContextCompat.getColor(itemView.context, R.color.green))
-
-            }
-            else{
-
-                itemBinding.companyPriceChange.setTextColor(ContextCompat.getColor(itemView.context, R.color.red))
-                itemBinding.companyPriceChangePercent.setTextColor(ContextCompat.getColor(itemView.context, R.color.red))
-
-            }
+        }
+        private fun createChangeString(priceChange: Double, priceChangePercent: Double):String{
+            val sign: String = if(priceChange<0.0) "-" else "+"
+            val priceChangeWithoutSign: Double = if(priceChange<0.0) priceChange*(-1.0) else priceChange
+            val priceChangePercentWithoutSign: Double = if(priceChange<0.0) priceChangePercent*(-1.0) else priceChangePercent
+            return "$sign$$priceChangeWithoutSign ($priceChangePercentWithoutSign%)"
         }
     }
 

@@ -7,5 +7,5 @@ class CompanyMapper : Mapper<CompanyInfoSrc, CompanyInfoDst> {
 
     override fun map(data: CompanyInfoSrc) =
         CompanyInfoDst(data.companyName, data.symbol, url+data.symbol+ex, data.latestPrice,
-            data.change, data.changePercent)
+                "%.2f".format(data.change).toDouble(), "%.2f".format(data.changePercent*100).toDouble())
 }

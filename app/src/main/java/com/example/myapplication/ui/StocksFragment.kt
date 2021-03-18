@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.*
 import com.example.myapplication.databinding.FragmentStocksBinding
 import com.example.myapplication.network.Retrofit
-import kotlin.reflect.typeOf
 
 class StocksFragment: Fragment() {
 
@@ -35,10 +34,10 @@ class StocksFragment: Fragment() {
             LinearLayoutManager.VERTICAL,false)
         stockViewModel =  ViewModelProvider(this, stockViewModelFactory).get(StockViewModel::class.java)
         val companies : LiveData<List<CompanyInfoDst>> = stockViewModel.res
+        val companyAdapter = CompanyAdapter()
         companies.observe(viewLifecycleOwner, {res->
-            Log.d("TAG1",""+ res)
-            val companyAdapter = CompanyAdapter(res)
-            Log.d("TAG1",""+companyAdapter.itemCount)
+            Log.d("TAG", ""+res)
+            companyAdapter.submitList(res)
             binding?.stocksRecyclerView?.adapter = companyAdapter
         })
         binding?.stocksRecyclerView?.layoutManager=mLayout
