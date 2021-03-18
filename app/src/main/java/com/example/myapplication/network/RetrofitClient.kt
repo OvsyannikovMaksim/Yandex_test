@@ -1,7 +1,8 @@
-package com.example.myapplication.Network
+package com.example.myapplication.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 object RetrofitClient {
     private var retrofit: Retrofit? = null
@@ -10,6 +11,7 @@ object RetrofitClient {
         if (retrofit ==null){
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
