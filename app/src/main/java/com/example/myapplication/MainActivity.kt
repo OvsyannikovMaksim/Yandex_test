@@ -3,32 +3,36 @@ package com.example.myapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.ui.StocksFragment
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var tabLayout: TabLayout
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        tabLayout = findViewById(R.id.tab_layout)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 //выбор
-                Log.d("TAG", "sel "+tab)
+                Log.d("TAG", "sel "+tab?.position)
+                chooseFragment(tab?.position)
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 //повторное нажатие на выбранный уже
-                Log.d("TAG", "resel "+tab)
+                Log.d("TAG", "resel "+tab?.tag)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
                 //показывыает какой был выбран до переключения
-                Log.d("TAG", "unsel "+tab)
+                Log.d("TAG", "unsel "+tab?.text)
             }
         })
 
@@ -40,6 +44,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun chooseFragment(tabPos:Int?){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        when(tabPos){
+            0->fragmentTransaction
+                    .replace(R.id.container, StocksFragment())
+                    .commit()
+
+            1->fragmentTransaction
+                    .replace(R.id.container, FavoriteFragment())
+                    .commit()
+        }
+    }
 
 
 }

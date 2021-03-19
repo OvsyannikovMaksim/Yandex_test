@@ -10,9 +10,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.*
 import com.example.myapplication.databinding.FragmentStocksBinding
-import com.example.myapplication.network.Retrofit
+import com.example.myapplication.api.Retrofit
+import com.example.myapplication.common.CompanyInfoDst
+import com.example.myapplication.repository.CompanyRepoImpl
+import com.example.myapplication.viewmodel.StockViewModel
+import com.example.myapplication.viewmodel.StockViewModelFactory
 
 class StocksFragment: Fragment() {
 
@@ -23,7 +26,7 @@ class StocksFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding= FragmentStocksBinding.inflate(inflater)
         val repo = CompanyRepoImpl(Retrofit.finHubApi)
-        stockViewModelFactory=StockViewModelFactory(repo)
+        stockViewModelFactory= StockViewModelFactory(repo)
         return binding!!.root
     }
 

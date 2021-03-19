@@ -1,8 +1,8 @@
-package com.example.myapplication
+package com.example.myapplication.repository
 
+import com.example.myapplication.common.CompanyInfoSrc
 import com.example.myapplication.api.IEXCloudApi
 import io.reactivex.Flowable
-import retrofit2.Call
 
 class CompanyRepoImpl(private val api: IEXCloudApi) : CompanyRepo {
 

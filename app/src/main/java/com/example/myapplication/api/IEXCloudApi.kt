@@ -1,6 +1,6 @@
 package com.example.myapplication.api
 
-import com.example.myapplication.CompanyInfoSrc
+import com.example.myapplication.common.CompanyInfoSrc
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query
