@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myapplication.IListener
 import com.example.myapplication.R
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.StockItemBinding
 
 //private var mListener: IListener,
-class CompanyAdapter :
+class CompanyAdapter(private var mListener: IListener) :
         ListAdapter<CompanyInfoDst, CompanyAdapter.CompanyVH>(DiffCallback){
 
     private lateinit var binding: StockItemBinding
@@ -22,7 +23,7 @@ class CompanyAdapter :
 
         val inflater : LayoutInflater = LayoutInflater.from(parent.context)
         binding = StockItemBinding.inflate(inflater,parent, false)
-        return CompanyVH(binding)
+        return CompanyVH(binding, mListener)
 
     }
 
@@ -33,7 +34,7 @@ class CompanyAdapter :
 
 
 
-    class CompanyVH (private var itemBinding: StockItemBinding):
+    class CompanyVH (private var itemBinding: StockItemBinding, private var mListener: IListener):
         RecyclerView.ViewHolder(itemBinding.root){
 
         fun bind(companyInfo: CompanyInfoDst, position: Int){
@@ -50,6 +51,9 @@ class CompanyAdapter :
             itemBinding.companyTicker.text=companyInfo.ticker
             itemBinding.companyPriceChange.text=createChangeString(companyInfo.priceChange,companyInfo.priceChangePercent)
             itemBinding.companyPriceChange.setTextColor(colorOfChange)
+            itemBinding.favButton.isChecked=companyInfo.isFavorite
+            itemBinding.favButton.setOnCheckedChangeListener{ _,
+            isChecked->mListener.pressButtonFavorite(isChecked, companyInfo.ticker)}
 
         }
         private fun createChangeString(priceChange: Double, priceChangePercent: Double):String{
@@ -79,4 +83,5 @@ class CompanyAdapter :
         }
 
     }
+
 }

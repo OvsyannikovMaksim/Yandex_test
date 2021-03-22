@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.ui.FavoriteFragment
 import com.example.myapplication.ui.StocksFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,14 +30,14 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 //повторное нажатие на выбранный уже
-                Log.d("TAG", "resel "+tab?.tag)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
                 //показывыает какой был выбран до переключения
-                Log.d("TAG", "unsel "+tab?.text)
             }
         })
+
+        //binding.outlinedTextField.setOnClickListener{supportFragmentManager.beginTransaction()}
 
 
         if (savedInstanceState == null) {
@@ -59,3 +62,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+

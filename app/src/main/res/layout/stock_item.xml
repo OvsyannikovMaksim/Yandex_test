@@ -52,6 +52,7 @@
             tool:text="CompanyTicker" />
 
         <CheckBox
+            android:id="@+id/fav_button"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="6dp"
