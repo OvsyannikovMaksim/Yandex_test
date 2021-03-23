@@ -28,15 +28,20 @@ class StockViewModel(private var companyRepo: CompanyRepo, private var localRepo
     private fun loadData() {
 
         disposableStocks = companyRepo.getPopularCompany()
-                .flatMapIterable { s -> s }
-                .map { s -> mapper.map(s) }
-                .zipWith(localRepo.getAllFavoriteCompany()) { comp, favLst ->
+                //.doOnNext { s-> Log.d("TAG", ""+s) }
+                //.flatMapSingle { s->Flowable.fromIterable(s)
+                //        .map { s -> mapper.map(s) }
+                //        .toList()}
+                /*.zipWith(localRepo.getAllFavoriteCompany()) { comp, favLst ->
                     //условие
                     return@zipWith comp
                 }
+                .toList()*/
+                .flatMapIterable {s->s}
+                .map { s -> mapper.map(s) }
                 .toList()
                 .subscribe({ v -> companyList.postValue(v) },
-                        { error -> Log.d("FavoriteViewModel", "Error in downloading: " + error.message) })
+                        { error -> Log.d("StockViewModel", "Error in downloading: " + error.message) })
     }
 
     fun clear(){
