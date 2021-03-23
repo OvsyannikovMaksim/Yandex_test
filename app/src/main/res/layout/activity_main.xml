@@ -19,16 +19,14 @@
             android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             app:startIconDrawable="@drawable/ic_baseline_search_24"
             app:layout_scrollFlags="scroll|enterAlways"
             style="@style/SearchLine">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="false"
                 android:text="Find company or ticker"
                 />
 
