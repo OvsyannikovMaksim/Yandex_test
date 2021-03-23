@@ -70,12 +70,7 @@ class FavoriteFragment: Fragment() {
 
     inner class ClickChecker : IListener{
         override fun pressButtonFavorite(bool: Boolean, ticker: String) {
-                if(bool){
-                    favCompDao.insertTicker(FavoriteCompany(ticker))
-                }
-                else{
-                    favCompDao.deleteTicker(FavoriteCompany(ticker))
-                }
+           favoriteViewModel.pressButtonFavorite(bool, ticker)
         }
 
     }

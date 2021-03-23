@@ -22,9 +22,9 @@ class LocalRepoImpl(private val favCompDao: FavoriteCompanyDao) : LocalRepo {
             favCompDao.deleteTicker(favComp)
         }.subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("TAG", "Blog Db: list insertion was successful")
+                    Log.d("TAG", "Blog Db: delete was successful")
                 }, {
-                    Log.d("TAG", "Blog Db: list insertion wasn't successful")
+                    Log.d("TAG", "Blog Db: delete wasn't successful")
                     it.printStackTrace()
                 })
 
@@ -49,9 +49,9 @@ class LocalRepoImpl(private val favCompDao: FavoriteCompanyDao) : LocalRepo {
             favCompDao.updateTicker(favComp)
         }.subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("TAG", "Blog Db: list insertion was successful")
+                    Log.d("TAG", "Blog Db: update was successful")
                 }, {
-                    Log.d("TAG", "Blog Db: list insertion wasn't successful")
+                    Log.d("TAG", "Blog Db: update wasn't successful")
                     it.printStackTrace()
                 })
 

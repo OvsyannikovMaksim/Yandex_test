@@ -74,7 +74,8 @@ class StocksFragment: Fragment() {
 
     inner class ClickChecker : IListener{
         override fun pressButtonFavorite(bool: Boolean, ticker: String) {
-            mListener?.pressButtonFavorite(bool, ticker)
+            stockViewModel.pressButtonFavorite(bool, ticker)
         }
+
     }
 }

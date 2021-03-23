@@ -52,9 +52,3 @@ class StockViewModel(private var companyRepo: CompanyRepo, private var localRepo
         }
     }
 }
-/*
-.zipWith(localRepo.getAllFavoriteCompany()){comp, favLst->
-
-                    return@zipWith comp
-                }
-*/
