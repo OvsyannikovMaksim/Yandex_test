@@ -53,9 +53,9 @@ class StocksFragment: Fragment() {
                 LinearLayoutManager.VERTICAL, false)
         stockViewModel =  ViewModelProvider(this, stockViewModelFactory).get(StockViewModel::class.java)
         val companies : LiveData<List<CompanyInfoDst>> = stockViewModel.companyList
-        val companyAdapter = CompanyAdapter(ClickChecker())
+        val companyAdapter = CompanyFullInfoAdapter(ClickChecker())
         companies.observe(viewLifecycleOwner, { res ->
-            Log.d("TAG", "" + res)
+            Log.d("TAG321!", "" + res)
             companyAdapter.submitList(res)
             binding?.stocksRecyclerView?.adapter = companyAdapter
         })

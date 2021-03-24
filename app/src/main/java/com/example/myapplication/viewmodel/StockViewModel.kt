@@ -28,18 +28,18 @@ class StockViewModel(private var companyRepo: CompanyRepo, private var localRepo
     private fun loadData() {
 
         disposableStocks = companyRepo.getPopularCompany()
-                //.doOnNext { s-> Log.d("TAG", ""+s) }
-                //.flatMapSingle { s->Flowable.fromIterable(s)
-                //        .map { s -> mapper.map(s) }
-                //        .toList()}
-                /*.zipWith(localRepo.getAllFavoriteCompany()) { comp, favLst ->
-                    //условие
-                    return@zipWith comp
+                .subscribeOn(Schedulers.io())
+                .withLatestFrom(localRepo.getAllFavoriteCompany()){ comps, favLst->
+                    val compDstList:MutableList<CompanyInfoDst> = mutableListOf()
+                    for(comp in comps){
+                        val compDst = mapper.map(comp)
+                        if(favLst.contains(FavoriteCompany(compDst.ticker))){
+                            compDst.isFavorite=true
+                        }
+                        compDstList.add(compDst)
+                    }
+                    return@withLatestFrom compDstList
                 }
-                .toList()*/
-                .flatMapIterable {s->s}
-                .map { s -> mapper.map(s) }
-                .toList()
                 .subscribe({ v -> companyList.postValue(v) },
                         { error -> Log.d("StockViewModel", "Error in downloading: " + error.message) })
     }

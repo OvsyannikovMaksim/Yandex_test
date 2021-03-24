@@ -15,4 +15,8 @@ class CompanyRepoImpl(private val api: IEXCloudApi) : CompanyRepo {
     override fun getPopularCompany(): Flowable<List<CompanyInfoSrc>> {
         return api.getPopularCompany(API_KEY)
     }
+
+    override fun getGainersCompany(): Flowable<List<CompanyInfoSrc>>{
+        return api.getGainersCompany(API_KEY)
+    }
 }

@@ -9,6 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
+        android:minHeight="90dp"
         android:layout_height="wrap_content">
 
 
@@ -19,6 +20,8 @@
             android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:startIconTint="@color/black"
+            app:endIconTint="@color/black"
             app:startIconDrawable="@drawable/ic_baseline_search_24"
             app:layout_scrollFlags="scroll|enterAlways"
             style="@style/SearchLine">
@@ -26,6 +29,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_edit_text"
                 android:layout_width="match_parent"
+                android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:layout_height="match_parent"
                 android:text="Find company or ticker"
                 />

@@ -15,7 +15,6 @@ import com.example.myapplication.api.Retrofit
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.FragmentFavoriteBinding
 import com.example.myapplication.db.DataBase
-import com.example.myapplication.db.FavoriteCompany
 import com.example.myapplication.db.FavoriteCompanyDao
 import com.example.myapplication.repository.CompanyRepoImpl
 import com.example.myapplication.repository.LocalRepoImpl
@@ -50,7 +49,7 @@ class FavoriteFragment: Fragment() {
             LinearLayoutManager.VERTICAL, false)
         favoriteViewModel =  ViewModelProvider(this, favoriteViewModelFactory).get(FavoriteViewModel::class.java)
         val companies : LiveData<List<CompanyInfoDst>> = favoriteViewModel.companyList
-        val companyAdapter = CompanyAdapter(ClickChecker())
+        val companyAdapter = CompanyFullInfoAdapter(ClickChecker())
         companies.observe(viewLifecycleOwner, { res ->
             Log.d("TAG000", ""+res)
             companyAdapter.submitList(res)

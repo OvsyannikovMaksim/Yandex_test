@@ -14,4 +14,7 @@ interface IEXCloudApi {
 
     @GET("stock/market/list/mostactive")
     fun getPopularCompany(@Query("token") api_token: String): Flowable<List<CompanyInfoSrc>>
+
+    @GET("stock/market/list/gainers")
+    fun getGainersCompany(@Query("token") api_token: String): Flowable<List<CompanyInfoSrc>>
 }
