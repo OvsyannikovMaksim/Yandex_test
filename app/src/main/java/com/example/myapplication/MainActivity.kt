@@ -1,11 +1,16 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.ui.FavoriteFragment
+import com.example.myapplication.ui.SearchFragment
 import com.example.myapplication.ui.StocksFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,20 +26,31 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 //выбор
-                Log.d("TAG", "sel "+tab?.position)
+                Log.d("TabLayout", "sel "+tab?.position)
                 chooseFragment(tab?.position)
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 //повторное нажатие на выбранный уже
-                Log.d("TAG", "resel "+tab?.tag)
+                Log.d("TabLayout", "sel "+tab?.position)
+                chooseFragment(tab?.position)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
                 //показывыает какой был выбран до переключения
-                Log.d("TAG", "unsel "+tab?.text)
             }
         })
+        binding.textInputEditText.setOnClickListener{
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, SearchFragment())
+                .commit()
+            binding.tabLayout.visibility=GONE
+            binding.outlinedTextField.endIconMode= TextInputLayout.END_ICON_CLEAR_TEXT
+            binding.outlinedTextField.setEndIconDrawable(R.drawable.ic_baseline_clear_24)
+            binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_keyboard_backspace_24)
+            binding.textInputEditText.setText(null)
+
+        }
 
 
         if (savedInstanceState == null) {
@@ -57,5 +73,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
 }
+
