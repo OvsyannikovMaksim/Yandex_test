@@ -1,10 +1,11 @@
 package com.example.myapplication
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.ui.FavoriteFragment
 import com.example.myapplication.ui.SearchFragment
@@ -40,16 +41,25 @@ class MainActivity : AppCompatActivity() {
                 //показывыает какой был выбран до переключения
             }
         })
+
         binding.textInputEditText.setOnClickListener{
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, SearchFragment())
-                .commit()
+                    .replace(R.id.container, SearchFragment())
+                    .addToBackStack(null)
+                    .commit()
+            binding.textInputEditText.setText(null)
             binding.tabLayout.visibility=GONE
             binding.outlinedTextField.endIconMode= TextInputLayout.END_ICON_CLEAR_TEXT
             binding.outlinedTextField.setEndIconDrawable(R.drawable.ic_baseline_clear_24)
             binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_keyboard_backspace_24)
-            binding.textInputEditText.setText(null)
-
+            binding.outlinedTextField.setStartIconOnClickListener {
+                supportFragmentManager.popBackStack()
+                binding.outlinedTextField.setEndIconDrawable(null)
+                binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_search_24)
+                binding.tabLayout.visibility = VISIBLE
+                binding.outlinedTextField.endIconMode= TextInputLayout.END_ICON_NONE
+                binding.textInputEditText.setText(R.string.find_company_or_ticker)
+            }
         }
 
 

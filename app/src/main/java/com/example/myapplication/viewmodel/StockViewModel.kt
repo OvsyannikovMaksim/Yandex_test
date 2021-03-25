@@ -9,9 +9,7 @@ import com.example.myapplication.db.FavoriteCompany
 import com.example.myapplication.repository.CompanyRepo
 import com.example.myapplication.repository.LocalRepo
 import com.example.myapplication.util.CompanyMapper
-import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
-import io.reactivex.internal.operators.flowable.FlowableAllSingle
 import io.reactivex.schedulers.Schedulers
 
 class StockViewModel(private var companyRepo: CompanyRepo, private var localRepo: LocalRepo): ViewModel(), IListener{

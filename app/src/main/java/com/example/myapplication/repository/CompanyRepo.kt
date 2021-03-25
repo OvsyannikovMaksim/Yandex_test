@@ -8,4 +8,5 @@ interface CompanyRepo {
     fun getCompanyInfo(ticker:String): Flowable<CompanyInfoSrc>
     fun getPopularCompany(): Flowable<List<CompanyInfoSrc>>
     fun getGainersCompany(): Flowable<List<CompanyInfoSrc>>
+    fun doSearch(fragment:String): Flowable<List<CompanyInfoSrc>>
 }

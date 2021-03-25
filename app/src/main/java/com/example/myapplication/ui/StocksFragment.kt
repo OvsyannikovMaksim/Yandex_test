@@ -40,8 +40,8 @@ class StocksFragment: Fragment() {
         binding= FragmentStocksBinding.inflate(inflater)
         val companyRepo = CompanyRepoImpl(Retrofit.finHubApi)
         val dataBase = DataBase.getDataBase(this.context!!)!!
-        val favCompDao=dataBase.favoriteCompanyDao()
-        val localRepo = LocalRepoImpl(favCompDao)
+        val localDao=dataBase.localDao()
+        val localRepo = LocalRepoImpl(localDao)
         stockViewModelFactory= StockViewModelFactory(companyRepo, localRepo)
         return binding!!.root
     }

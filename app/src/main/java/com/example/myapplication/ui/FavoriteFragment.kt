@@ -15,7 +15,6 @@ import com.example.myapplication.api.Retrofit
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.FragmentFavoriteBinding
 import com.example.myapplication.db.DataBase
-import com.example.myapplication.db.FavoriteCompanyDao
 import com.example.myapplication.repository.CompanyRepoImpl
 import com.example.myapplication.repository.LocalRepoImpl
 import com.example.myapplication.viewmodel.FavoriteViewModel
@@ -28,15 +27,14 @@ class FavoriteFragment: Fragment() {
     private lateinit var favoriteViewModel: FavoriteViewModel
     private lateinit var favoriteViewModelFactory: FavoriteViewModelFactory
     private lateinit var dataBase:DataBase
-    lateinit var favCompDao: FavoriteCompanyDao
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding= FragmentFavoriteBinding.inflate(inflater)
         dataBase = DataBase.getDataBase(this.context!!)!!
-        favCompDao=dataBase.favoriteCompanyDao()
+        val localDao=dataBase.localDao()
+        val localRepo = LocalRepoImpl(localDao)
         val companyRepo = CompanyRepoImpl(Retrofit.finHubApi)
-        val localRepo = LocalRepoImpl(DataBase.getDataBase(this.context!!)!!.favoriteCompanyDao())
         favoriteViewModelFactory= FavoriteViewModelFactory(companyRepo, localRepo)
         return binding!!.root
     }
