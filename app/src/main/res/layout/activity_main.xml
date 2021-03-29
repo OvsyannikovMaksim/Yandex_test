@@ -28,14 +28,20 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_edit_text"
+                android:imeOptions="actionDone"
                 android:layout_width="match_parent"
+                android:inputType="text|textShortMessage"
                 android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
                 android:textCursorDrawable="@drawable/cursor_color"
+                android:focusableInTouchMode="true"
+                android:maxLines="1"
                 android:layout_height="match_parent"
-                android:text="Find company or ticker"
+                android:text="@string/find_company_or_ticker"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
         <com.google.android.material.tabs.TabLayout
@@ -50,12 +56,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stocks"/>
+                android:text="@string/stocks"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favorite"/>
+                android:text="@string/favorite"/>
 
 
         </com.google.android.material.tabs.TabLayout>

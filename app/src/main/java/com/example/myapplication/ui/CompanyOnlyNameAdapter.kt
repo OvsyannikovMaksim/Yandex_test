@@ -1,21 +1,15 @@
 package com.example.myapplication.ui
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myapplication.IListener
-import com.example.myapplication.R
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.NameItemBinding
-import com.example.myapplication.databinding.StockItemBinding
 
-//private var mListener: IListener,
-class CompanyOnlyNameAdapter() :
+class CompanyOnlyNameAdapter(private var mListener: IListener) :
         ListAdapter<CompanyInfoDst, CompanyOnlyNameAdapter.CompanyVH>(DiffCallback){
 
     private lateinit var binding: NameItemBinding
@@ -24,7 +18,7 @@ class CompanyOnlyNameAdapter() :
 
         val inflater : LayoutInflater = LayoutInflater.from(parent.context)
         binding = NameItemBinding.inflate(inflater,parent, false)
-        return CompanyVH(binding)
+        return CompanyVH(binding, mListener)
 
     }
 
@@ -35,10 +29,14 @@ class CompanyOnlyNameAdapter() :
 
 
 
-    class CompanyVH (private var itemBinding: NameItemBinding):
+    class CompanyVH (private var itemBinding: NameItemBinding, private var mListener: IListener):
             RecyclerView.ViewHolder(itemBinding.root){
-
+        private lateinit var text:String
+        init{
+            itemBinding.companyNameNameItem.setOnClickListener { mListener.find(text) }
+        }
         fun bind(companyInfo: CompanyInfoDst){
+            text=companyInfo.ticker
             itemBinding.companyNameNameItem.text=companyInfo.name
         }
 

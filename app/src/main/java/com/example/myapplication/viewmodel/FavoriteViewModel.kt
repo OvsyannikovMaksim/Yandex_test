@@ -3,9 +3,7 @@ package com.example.myapplication.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.IListener
 import com.example.myapplication.common.CompanyInfoDst
-import com.example.myapplication.db.FavoriteCompany
 import com.example.myapplication.repository.CompanyRepo
 import com.example.myapplication.repository.LocalRepo
 import com.example.myapplication.util.CompanyMapper
@@ -13,7 +11,7 @@ import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class FavoriteViewModel(private var companyRepo: CompanyRepo, private var localRepo: LocalRepo) : ViewModel(), IListener {
+class FavoriteViewModel(private var companyRepo: CompanyRepo, private var localRepo: LocalRepo) : ViewModel() {
 
     private lateinit var disposableFavorite: Disposable
     var companyList: MutableLiveData<List<CompanyInfoDst>> = MutableLiveData()
@@ -46,14 +44,7 @@ class FavoriteViewModel(private var companyRepo: CompanyRepo, private var localR
         disposableFavorite.dispose()
     }
 
-    override fun pressButtonFavorite(bool: Boolean, ticker: String) {
-        if(bool){
-            localRepo.insertTicker(FavoriteCompany(ticker))
-        }
-        else{
-            localRepo.deleteTicker(FavoriteCompany(ticker))
-        }
-    }
+
 }
 
 
