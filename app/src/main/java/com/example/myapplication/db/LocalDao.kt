@@ -2,7 +2,6 @@ package com.example.myapplication.db
 
 import androidx.room.*
 import io.reactivex.Flowable
-import io.reactivex.Observable
 
 @Dao
 interface LocalDao {

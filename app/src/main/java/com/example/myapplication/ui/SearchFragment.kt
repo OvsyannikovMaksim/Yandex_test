@@ -1,6 +1,6 @@
 package com.example.myapplication.ui
 
-import  android.content.Context
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +8,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,8 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.myapplication.IListener
-import com.example.myapplication.api.RetrofitIEXCloud
 import com.example.myapplication.api.RetrofitFinHub
+import com.example.myapplication.api.RetrofitIEXCloud
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.db.DataBase

@@ -1,12 +1,9 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -70,7 +67,6 @@ class MainActivity : AppCompatActivity(), IListener {
                 //показывыает какой был выбран до переключения
             }
         })
-
 
         dataBase = DataBase.getDataBase(applicationContext)!!
         val localDao = dataBase.localDao()
@@ -158,19 +154,17 @@ class MainActivity : AppCompatActivity(), IListener {
                 .distinctUntilChanged()
                 .switchMap { query ->
                     companyRepo.doSearch(query)
-                            .onErrorReturn { throwable -> SearchInfo(0, listOf()) }
+                            .onErrorReturn { SearchInfo(0, listOf()) }
                             .doOnNext { if(query!="") localRepo.insertSearch(SearchHistory(query)) }
                 }
-                .doOnNext { s->Log.d("ZALUPA", ""+s) }
                 .flatMapSingle {
                     Flowable.fromIterable(it.result)
                             .filter { s -> !s.symbol.contains(".") }
                             .flatMap { companyRepo.getCompanyInfo(it.symbol) }
                             .map { z -> compMapper.map(z) }
                             .toList()
-                            .onErrorReturn { throwable -> listOf() }
+                            .onErrorReturn { listOf() }
                 }
-                .doOnNext { s->Log.d("ZALUPA", ""+s) }
                 .withLatestFrom(localRepo.getAllFavoriteCompany().toObservable()){ comps, favLst->
                     for(comp in comps){
                         if(favLst.contains(FavoriteCompany(comp.ticker))){

@@ -2,7 +2,6 @@ package com.example.myapplication.repository
 
 import com.example.myapplication.common.CompanyInfoSrc
 import com.example.myapplication.common.SearchInfo
-import com.example.myapplication.common.SearchInfoComp
 import io.reactivex.Flowable
 import io.reactivex.Observable
 
