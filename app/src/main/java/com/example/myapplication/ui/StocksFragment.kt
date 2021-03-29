@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.IListener
-import com.example.myapplication.api.Retrofit
+import com.example.myapplication.api.RetrofitIEXCloud
+import com.example.myapplication.api.RetrofitFinHub
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.FragmentStocksBinding
 import com.example.myapplication.db.DataBase
@@ -31,14 +33,14 @@ class StocksFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (requireActivity() is IListener) {
+        if(requireActivity() is IListener){
             mListener = requireActivity() as IListener
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding= FragmentStocksBinding.inflate(inflater)
-        val companyRepo = CompanyRepoImpl(Retrofit.finHubApi)
+        val companyRepo = CompanyRepoImpl(RetrofitIEXCloud.iexCloudApi, RetrofitFinHub.finHubApi)
         val dataBase = DataBase.getDataBase(this.context!!)!!
         val localDao=dataBase.localDao()
         val localRepo = LocalRepoImpl(localDao)
@@ -55,7 +57,6 @@ class StocksFragment: Fragment() {
         val companies : LiveData<List<CompanyInfoDst>> = stockViewModel.companyList
         val companyAdapter = CompanyFullInfoAdapter(ClickChecker())
         companies.observe(viewLifecycleOwner, { res ->
-            Log.d("TAG321!", "" + res)
             companyAdapter.submitList(res)
             binding?.stocksRecyclerView?.adapter = companyAdapter
         })
@@ -67,6 +68,7 @@ class StocksFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mListener=null
         binding=null
         stockViewModel.clear()
     }
@@ -74,8 +76,15 @@ class StocksFragment: Fragment() {
 
     inner class ClickChecker : IListener{
         override fun pressButtonFavorite(bool: Boolean, ticker: String) {
-            stockViewModel.pressButtonFavorite(bool, ticker)
+            mListener?.pressButtonFavorite(bool, ticker)
         }
 
+        override fun getSearch(): MutableLiveData<List<CompanyInfoDst>> {
+            TODO("Not yet implemented")
+        }
+
+        override fun find(name: String) {
+            TODO("Not yet implemented")
+        }
     }
 }

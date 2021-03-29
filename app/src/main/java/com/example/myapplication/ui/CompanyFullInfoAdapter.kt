@@ -14,7 +14,6 @@ import com.example.myapplication.R
 import com.example.myapplication.common.CompanyInfoDst
 import com.example.myapplication.databinding.StockItemBinding
 
-//private var mListener: IListener,
 class CompanyFullInfoAdapter(private var mListener: IListener) :
         ListAdapter<CompanyInfoDst, CompanyFullInfoAdapter.CompanyVH>(DiffCallback){
 

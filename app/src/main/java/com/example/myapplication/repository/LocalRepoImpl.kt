@@ -1,5 +1,6 @@
 package com.example.myapplication.repository
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.myapplication.db.FavoriteCompany
 import com.example.myapplication.db.LocalDao
@@ -17,7 +18,7 @@ class LocalRepoImpl(private val localDao:LocalDao) : LocalRepo {
     override fun getSearchCompany(): Flowable<List<SearchHistory>> {
         return localDao.getSearchCompany()
     }
-
+    @SuppressLint("CheckResult")
     override fun deleteTicker(favComp: FavoriteCompany) {
         Single.fromCallable {
             localDao.deleteTicker(favComp)
@@ -27,11 +28,13 @@ class LocalRepoImpl(private val localDao:LocalDao) : LocalRepo {
                 }, {
                     Log.d("TAG", "Blog Db: delete wasn't successful")
                     it.printStackTrace()
-                }).dispose()
+                })
 
     }
 
+    @SuppressLint("CheckResult")
     override fun insertTicker(favComp: FavoriteCompany) {
+        Log.d("LocalRepoIMPL", "$favComp")
         Single.fromCallable {
             localDao.insertTicker(favComp)
         }.subscribeOn(Schedulers.io())
@@ -40,9 +43,10 @@ class LocalRepoImpl(private val localDao:LocalDao) : LocalRepo {
                 }, {
                     Log.d("TAG", "Blog Db: list insertion wasn't successful")
                     it.printStackTrace()
-                }).dispose()
+                })
     }
 
+    @SuppressLint("CheckResult")
     override fun updateTicker(favComp: FavoriteCompany) {
         Single.fromCallable {
             localDao.updateTicker(favComp)
@@ -52,10 +56,11 @@ class LocalRepoImpl(private val localDao:LocalDao) : LocalRepo {
                 }, {
                     Log.d("TAG", "Blog Db: update wasn't successful")
                     it.printStackTrace()
-                }).dispose()
+                })
 
     }
 
+    @SuppressLint("CheckResult")
     override fun deleteSearch(lastSearch: SearchHistory) {
         Single.fromCallable {
             localDao.deleteSearch(lastSearch)
@@ -65,10 +70,11 @@ class LocalRepoImpl(private val localDao:LocalDao) : LocalRepo {
                 }, {
                     Log.d("TAG", "Blog Db: delete wasn't successful")
                     it.printStackTrace()
-                }).dispose()
+                })
 
     }
 
+    @SuppressLint("CheckResult")
     override fun insertSearch(lastSearch: SearchHistory) {
         Single.fromCallable {
             localDao.insertSearch(lastSearch)
@@ -78,9 +84,10 @@ class LocalRepoImpl(private val localDao:LocalDao) : LocalRepo {
                 }, {
                     Log.d("TAG", "Blog Db: list insertion wasn't successful")
                     it.printStackTrace()
-                }).dispose()
+                })
     }
 
+    @SuppressLint("CheckResult")
     override fun updateSearch(lastSearch: SearchHistory) {
         Single.fromCallable {
             localDao.updateSearch(lastSearch)

@@ -2,6 +2,7 @@ package com.example.myapplication.db
 
 import androidx.room.*
 import io.reactivex.Flowable
+import io.reactivex.Observable
 
 @Dao
 interface LocalDao {
@@ -21,7 +22,7 @@ interface LocalDao {
     @Query("SELECT search FROM SearchHistory LIMIT 11")
     fun getSearchCompany() : Flowable<List<SearchHistory>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSearch(lastSearch: SearchHistory)
 
     @Update
