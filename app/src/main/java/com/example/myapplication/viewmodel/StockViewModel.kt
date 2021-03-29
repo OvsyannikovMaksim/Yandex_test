@@ -26,7 +26,6 @@ class StockViewModel(private var companyRepo: CompanyRepo, private var localRepo
 
         disposableStocks = companyRepo.getPopularCompany()
                 .subscribeOn(Schedulers.io())
-                .doOnNext { s->Log.d("GOVNO", ""+s) }
                 .withLatestFrom(localRepo.getAllFavoriteCompany()){ comps, favLst->
                     val compDstList:MutableList<CompanyInfoDst> = mutableListOf()
                     for(comp in comps){

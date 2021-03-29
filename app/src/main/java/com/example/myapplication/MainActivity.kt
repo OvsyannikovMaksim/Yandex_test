@@ -1,9 +1,12 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -75,36 +78,39 @@ class MainActivity : AppCompatActivity(), IListener {
 
 
         binding.textInputEditText.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(R.id.container, SearchFragment())
-                    .addToBackStack(null)
-                    .commit()
-            binding.textInputEditText.text = null
-            binding.tabLayout.visibility = GONE
-            binding.outlinedTextField.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
-            binding.outlinedTextField.setEndIconDrawable(R.drawable.ic_baseline_clear_24)
-            binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_keyboard_backspace_24)
-            textWatcher = binding.textInputEditText.addTextChangedListener(
-                    { q, w, e, r ->
-                        Log.d("TextChangedListener", " before $q $w $e $r")
-                    },
-                    { q, w, e, r ->
-                        Log.d("TextChangedListener", "on $q $w $e $r")
-                        subject.onNext(q.toString())
-                    },
-                    { q ->
-                        Log.d("TextChangedListener", "after $q ")
-                    }
-            )
-            binding.outlinedTextField.setStartIconOnClickListener {
-                binding.textInputEditText.removeTextChangedListener(textWatcher)
-                supportFragmentManager.popBackStack()
-                binding.outlinedTextField.endIconDrawable = null
-                binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_search_24)
-                binding.tabLayout.visibility = VISIBLE
-                binding.outlinedTextField.endIconMode = TextInputLayout.END_ICON_NONE
-                binding.textInputEditText.setText(R.string.find_company_or_ticker)
+            if(supportFragmentManager.backStackEntryCount==0 ) {
+
+                supportFragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.container, SearchFragment())
+                        .addToBackStack(null)
+                        .commit()
+                binding.textInputEditText.text = null
+                binding.tabLayout.visibility = GONE
+                binding.outlinedTextField.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                binding.outlinedTextField.setEndIconDrawable(R.drawable.ic_baseline_clear_24)
+                binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_keyboard_backspace_24)
+                textWatcher = binding.textInputEditText.addTextChangedListener(
+                        { q, w, e, r ->
+                            Log.d("TextChangedListener", " before $q $w $e $r")
+                        },
+                        { q, w, e, r ->
+                            Log.d("TextChangedListener", "on $q $w $e $r")
+                            subject.onNext(q.toString())
+                        },
+                        { q ->
+                            Log.d("TextChangedListener", "after $q ")
+                        }
+                )
+                binding.outlinedTextField.setStartIconOnClickListener {
+                    binding.textInputEditText.removeTextChangedListener(textWatcher)
+                    supportFragmentManager.popBackStack()
+                    binding.outlinedTextField.endIconDrawable = null
+                    binding.outlinedTextField.setStartIconDrawable(R.drawable.ic_baseline_search_24)
+                    binding.tabLayout.visibility = VISIBLE
+                    binding.outlinedTextField.endIconMode = TextInputLayout.END_ICON_NONE
+                    binding.textInputEditText.setText(R.string.find_company_or_ticker)
+                }
             }
         }
 
@@ -146,16 +152,16 @@ class MainActivity : AppCompatActivity(), IListener {
         val resultOfSearch: MutableLiveData<List<CompanyInfoDst>> = MutableLiveData()
         val compMapper = CompanyMapper()
         subject
-                .debounce(500, TimeUnit.MILLISECONDS)
+                .debounce(700, TimeUnit.MILLISECONDS)
                 .doOnNext { Log.d("Subject", it) }
                 .subscribeOn(Schedulers.io())
                 .distinctUntilChanged()
                 .switchMap { query ->
-
                     companyRepo.doSearch(query)
                             .onErrorReturn { throwable -> SearchInfo(0, listOf()) }
                             .doOnNext { if(query!="") localRepo.insertSearch(SearchHistory(query)) }
                 }
+                .doOnNext { s->Log.d("ZALUPA", ""+s) }
                 .flatMapSingle {
                     Flowable.fromIterable(it.result)
                             .filter { s -> !s.symbol.contains(".") }
@@ -164,6 +170,7 @@ class MainActivity : AppCompatActivity(), IListener {
                             .toList()
                             .onErrorReturn { throwable -> listOf() }
                 }
+                .doOnNext { s->Log.d("ZALUPA", ""+s) }
                 .withLatestFrom(localRepo.getAllFavoriteCompany().toObservable()){ comps, favLst->
                     for(comp in comps){
                         if(favLst.contains(FavoriteCompany(comp.ticker))){

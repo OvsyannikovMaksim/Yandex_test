@@ -28,9 +28,13 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_edit_text"
+                android:imeOptions="actionDone"
                 android:layout_width="match_parent"
+                android:inputType="text|textShortMessage"
                 android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
                 android:textCursorDrawable="@drawable/cursor_color"
+                android:focusableInTouchMode="true"
+                android:maxLines="1"
                 android:layout_height="match_parent"
                 android:text="@string/find_company_or_ticker"
                 />
