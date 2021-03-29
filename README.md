@@ -1,4 +1,4 @@
-# Yandex_test
+# Test app for Yandex School
 - MVVM
 - Retrofit
 - RxJava2
@@ -8,3 +8,5 @@
 - IEXCloud Api
 - FinnHub Api
 - Material Design
+
+Creator: Ovsyannikov Maksim
